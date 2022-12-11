@@ -53,10 +53,32 @@ namespace accounting_sw.DataChangerForms
 
         private void buttonInstallSoftOnPC_Click(object sender, EventArgs e)
         {
-            int currentRowIndex = dataGridViewInstalledLicences.CurrentCell.RowIndex;
-            sqLite.InsertNewSoftwareToPC(comboBoxSoftwareName.Text, 
-                dataGridViewInstalledLicences.Rows[currentRowIndex].Cells[dataGridViewInstalledLicences.Columns.Count - 5].Value.ToString(),
-                treeViewAudiencesAndPCs.SelectedNode.Text);
+            if (comboBoxSoftwareName.Text != "" && comboBoxSoftwareName.Text != null)
+            {
+                int currentRowIndex = dataGridViewInstalledLicences.CurrentCell.RowIndex;
+                if (currentRowIndex > 0)
+                {
+                    try
+                    {
+                        sqLite.InsertNewSoftwareToPC(comboBoxSoftwareName.Text,
+                            dataGridViewInstalledLicences.Rows[currentRowIndex].Cells[dataGridViewInstalledLicences.Columns.Count - 5].Value.ToString(),
+                            treeViewAudiencesAndPCs.SelectedNode.Text);
+                        dataGridViewInstalledLicences.DataSource = sqLite.SelectNotInstalledLicencesFromDB(comboBoxSoftwareName.Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.StartsWith(MainForm.uniqueErrorMessage))
+                        {
+                            MessageBox.Show("Выбранное ПО уже используется", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Произошла непредвиденная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
         }
+
     }
 }

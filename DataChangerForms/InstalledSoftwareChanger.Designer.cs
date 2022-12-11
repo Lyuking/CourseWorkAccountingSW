@@ -42,6 +42,7 @@ namespace accounting_sw.DataChangerForms
             this.dataGridViewInstalledLicences.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewInstalledLicences.Location = new System.Drawing.Point(203, 12);
             this.dataGridViewInstalledLicences.Name = "dataGridViewInstalledLicences";
+            this.dataGridViewInstalledLicences.ReadOnly = true;
             this.dataGridViewInstalledLicences.Size = new System.Drawing.Size(403, 280);
             this.dataGridViewInstalledLicences.TabIndex = 0;
             // 
@@ -68,11 +69,11 @@ namespace accounting_sw.DataChangerForms
             // 
             // buttonInstallSoftOnPC
             // 
-            this.buttonInstallSoftOnPC.Location = new System.Drawing.Point(478, 298);
+            this.buttonInstallSoftOnPC.Location = new System.Drawing.Point(431, 298);
             this.buttonInstallSoftOnPC.Name = "buttonInstallSoftOnPC";
-            this.buttonInstallSoftOnPC.Size = new System.Drawing.Size(124, 23);
+            this.buttonInstallSoftOnPC.Size = new System.Drawing.Size(171, 23);
             this.buttonInstallSoftOnPC.TabIndex = 3;
-            this.buttonInstallSoftOnPC.Text = "Добавить П.О. к ПК";
+            this.buttonInstallSoftOnPC.Text = "Добавить ПО на компьютер";
             this.buttonInstallSoftOnPC.UseVisualStyleBackColor = true;
             this.buttonInstallSoftOnPC.Click += new System.EventHandler(this.buttonInstallSoftOnPC_Click);
             // 
@@ -80,13 +81,13 @@ namespace accounting_sw.DataChangerForms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(614, 333);
+            this.ClientSize = new System.Drawing.Size(614, 331);
             this.Controls.Add(this.buttonInstallSoftOnPC);
             this.Controls.Add(this.comboBoxSoftwareName);
             this.Controls.Add(this.treeViewAudiencesAndPCs);
             this.Controls.Add(this.dataGridViewInstalledLicences);
             this.Name = "InstalledSoftwareChanger";
-            this.Text = "InstalledSoftwareChanger";
+            this.Text = "Добавление ПО на компьютер";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewInstalledLicences)).EndInit();
             this.ResumeLayout(false);
 
