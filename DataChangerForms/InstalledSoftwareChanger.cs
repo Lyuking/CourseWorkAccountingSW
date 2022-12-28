@@ -53,30 +53,58 @@ namespace accounting_sw.DataChangerForms
 
         private void buttonInstallSoftOnPC_Click(object sender, EventArgs e)
         {
-            if (comboBoxSoftwareName.Text != "" && comboBoxSoftwareName.Text != null)
-            {
-                int currentRowIndex = dataGridViewInstalledLicences.CurrentCell.RowIndex;
-                if (currentRowIndex > 0)
+            if(treeViewAudiencesAndPCs.SelectedNode.Parent.Parent!= null)
+            {               
+                if (comboBoxSoftwareName.Text != "" && comboBoxSoftwareName.Text != null)
                 {
-                    try
+                    if (dataGridViewInstalledLicences.CurrentCell != null)
                     {
-                        sqLite.InsertNewSoftwareToPC(comboBoxSoftwareName.Text,
-                            dataGridViewInstalledLicences.Rows[currentRowIndex].Cells[dataGridViewInstalledLicences.Columns.Count - 5].Value.ToString(),
-                            treeViewAudiencesAndPCs.SelectedNode.Text);
-                        dataGridViewInstalledLicences.DataSource = sqLite.SelectNotInstalledLicencesFromDB(comboBoxSoftwareName.Text);
-                    }
-                    catch (Exception ex)
-                    {
-                        if (ex.Message.StartsWith(MainForm.uniqueErrorMessage))
+                        int currentRowIndex = dataGridViewInstalledLicences.CurrentCell.RowIndex;
+                        if (currentRowIndex >= 0)
                         {
-                            MessageBox.Show("Выбранное ПО уже используется", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Произошла непредвиденная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            try
+                            {
+                                DataTable dataTable = sqLite.SelectLicencesFromSoftwareFromCurrentMachineFromDB(comboBoxSoftwareName.Text, treeViewAudiencesAndPCs.SelectedNode.Text);
+                                bool isInstalled = false;
+                                for (int i = 0; i < dataTable.Rows.Count; i++)
+                                {
+                                    if (dataTable.Rows[i].ItemArray[1].ToString() == dataGridViewInstalledLicences.Rows[currentRowIndex].Cells[1].Value.ToString())
+                                        isInstalled = true;
+                                }
+                                if (!isInstalled)
+                                {
+                                    sqLite.InsertNewSoftwareToPC(comboBoxSoftwareName.Text,
+                                        dataGridViewInstalledLicences.Rows[currentRowIndex].Cells[dataGridViewInstalledLicences.Columns.Count - 6].Value.ToString(),
+                                        treeViewAudiencesAndPCs.SelectedNode.Text);
+                                    dataGridViewInstalledLicences.DataSource = sqLite.SelectNotInstalledLicencesFromDB(comboBoxSoftwareName.Text);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Выбранное ПО уже установлено на данную машину", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                if (ex.Message.StartsWith(MainForm.uniqueErrorMessage))
+                                {
+                                    MessageBox.Show("Выбранное ПО уже используется", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Произошла непредвиденная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
                         }
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Выберите ПО", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите компьютер", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

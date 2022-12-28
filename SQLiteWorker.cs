@@ -27,7 +27,7 @@ namespace accounting_sw
         SQLiteConnection Connect;
         public SQLiteWorker(string path)
         {
-            Connect = new SQLiteConnection(@"Data Source=" + path + ";datetimeformat=CurrentCulture;PRAGMA foreign_keys = 0;");
+            Connect = new SQLiteConnection(@"Data Source=" + path + ";datetimeformat=CurrentCulture;PRAGMA foreign_keys = 0;PRAGMA recursive_triggers=off;");
             Connect.Open();
         }
         public void ConnectionClose()
@@ -73,8 +73,8 @@ namespace accounting_sw
                     commandText = "Select software_technical_details.software_name as Наименование, subject_area.subject_area_name as \"Предметная область\", " +
                         "software_technical_details.software_description as Описание, software_technical_details.software_required_space as \"Требуемое место\"," +
                         " software_technical_details.software_QR  from software_technical_details " +
-                        "left join subject_area on subject_area.subject_area_id = software_technical_details.subject_area_id " +
-                        "where subject_area.subject_area_id IN(Select software_technical_details.subject_area_id from software_technical_details)";
+                        "left join subject_area on subject_area.subject_area_id = software_technical_details.subject_area_id "
+                        /*"where subject_area.subject_area_id IN(Select software_technical_details.subject_area_id from software_technical_details)"*/;
                     break;
                 case dataTables.software_technical_details:
                     
@@ -106,20 +106,22 @@ namespace accounting_sw
             return dt;
         }
 
-        public DataTable SelectInstalledSoftwareOnPCFromDB(string pcnum)
+        public DataTable SelectInstalledSoftwareOnPCFromDB(string pcNumber)
         {
             return GetDataFromDB($"Select software_name from software_technical_details" +
                 $" where software_technical_details.software_technical_details_id IN(Select software_technical_details_id from software " +
                 $"where software.software_id IN(Select software_id from installed_software " +
                 $"where installed_software.computer_id = (Select computer_id from installed_software " +
-                $"where computer_id = (Select computer_id from computer where computer_number = {pcnum}))))");
+                $"where computer_id = (Select computer_id from computer where computer_number = {pcNumber}))))");
         }
-        public DataTable SelectLicencesFromSoftwareFromCurrentMachineFromDB(string softwareName, string pcnum)
+        public DataTable SelectLicencesFromSoftwareFromCurrentMachineFromDB(string softwareName, string pcNumber)
         {
             return GetDataFromDB($"SELECT  licence_type.licence_type_name as \"Тип лицензии\", licence_details.licence_key as \"Ключ\"," +
                 $" licence_details.licence_date_start as \"Дата начала лицензии\", licence_details.licence_date_end as \"Дата окончания лицензии\"," +
-                $" licence_details.licence_price as \"Цена лицензии\", printf('%s %s %s', employee_name, employee_surname, employee_patronymic) as \"Ответственное лицо\" FROM licence " +
-                $"JOIN licence_type  ON licence_type.licence_type_id = licence.licence_type_id JOIN licence_details on licence_details.licence_details_id = licence.licence_details_id " +
+                $" licence_details.licence_price as \"Цена лицензии\", printf('%s %s %s', employee_name, employee_surname, employee_patronymic) as \"Ответственное лицо\" " +
+                "FROM licence " +
+                $"LEFT JOIN licence_type  ON licence_type.licence_type_id = licence.licence_type_id " +
+                $"JOIN licence_details on licence_details.licence_details_id = licence.licence_details_id " +
                 $"LEFT JOIN employee on employee.employee_id = licence.employee_id " +
                 $"where licence.licence_id in (Select licence_id from software " +
                 $"where licence.licence_id in (Select software.licence_id from software " +
@@ -127,7 +129,7 @@ namespace accounting_sw
                 $"where software.software_technical_details_id = (Select software_technical_details.software_technical_details_id from software_technical_details " +
                 $"where software_technical_details.software_name = \"{softwareName}\")) " +
                 $"AND software.software_id IN(Select installed_software.software_id from installed_software " +
-                $"where installed_software.computer_id = (Select computer.computer_id from computer where computer.computer_number = \"{pcnum}\"))))");
+                $"where installed_software.computer_id = (Select computer.computer_id from computer where computer.computer_number = \"{pcNumber}\"))))");
         }
         public DataTable SelectComputerNumberFromDB(string audience)
         {
@@ -138,8 +140,8 @@ namespace accounting_sw
         {
             return GetDataFromDB($"SELECT  licence_type.licence_type_name as \"Тип лицензии\", licence_details.licence_key as \"Ключ\", " +
                 $"licence_details.licence_date_start as \"Дата начала лицензии\", licence_details.licence_date_end as \"Дата окончания лицензии\", " +
-                $"licence_details.licence_price as \"Цена лицензии\", printf('%s %s %s', employee_name, employee_surname, employee_patronymic) as \"Ответственное лицо\" " +
-                $"FROM licence JOIN licence_type  ON licence_type.licence_type_id = licence.licence_type_id " +
+                $"licence_details.licence_price as \"Цена лицензии\", licence_details.licence_count as Количество, printf('%s %s %s', employee_name, employee_surname, employee_patronymic) as \"Ответственное лицо\" " +
+                $"FROM licence left JOIN licence_type  ON licence_type.licence_type_id = licence.licence_type_id " +
                 $"JOIN licence_details on licence_details.licence_details_id = licence.licence_details_id " +
                 $"LEFT JOIN employee on employee.employee_id = licence.employee_id where licence.licence_id in (Select licence_id from software " +
                 $"where licence.licence_id in (Select software.licence_id from software " +
@@ -159,8 +161,9 @@ namespace accounting_sw
         {
             return GetDataFromDB($"SELECT  licence_type.licence_type_name as \"Тип лицензии\", licence_details.licence_key as \"Ключ\"," +
                 " licence_details.licence_date_start as \"Дата начала лицензии\", licence_details.licence_date_end as \"Дата окончания лицензии\"," +
-                " licence_details.licence_price as \"Цена лицензии\", printf('%s %s %s', employee_name, employee_surname, employee_patronymic) as \"Ответственное лицо\" FROM licence " +
-                "JOIN licence_type  ON licence_type.licence_type_id = licence.licence_type_id " +
+                $" licence_details.licence_price as \"Цена лицензии\", printf('%s %s %s', employee_name, employee_surname, employee_patronymic) as \"Ответственное лицо\" " +
+                "FROM licence " +
+                "left JOIN licence_type  ON licence_type.licence_type_id = licence.licence_type_id " +
                 "JOIN licence_details on licence_details.licence_details_id = licence.licence_details_id " +
                 "left JOIN employee on employee.employee_id = licence.employee_id " +
                 "where licence.licence_id in (Select licence_id from software " +
@@ -173,13 +176,13 @@ namespace accounting_sw
         {
             return GetDataFromDB($"SELECT  licence_type.licence_type_name as \"Тип лицензии\", licence_details.licence_key as \"Ключ\", " +
                 "licence_details.licence_date_start as \"Дата начала лицензии\", licence_details.licence_date_end as \"Дата окончания лицензии\", " +
-                "licence_details.licence_price as \"Цена лицензии\", printf('%s %s %s', employee_name, employee_surname, employee_patronymic) as \"Ответственное лицо\" FROM licence " +
-                "JOIN licence_type  ON licence_type.licence_type_id = licence.licence_type_id " +
+                "licence_details.licence_price as \"Цена лицензии\", licence_details.licence_count as Количество, printf('%s %s %s', employee_name, employee_surname, employee_patronymic) as \"Ответственное лицо\" FROM licence " +
+                "left JOIN licence_type  ON licence_type.licence_type_id = licence.licence_type_id " +
                 "JOIN licence_details on licence_details.licence_details_id = licence.licence_details_id left " +
-                "JOIN employee on employee.employee_id = licence.employee_id" +
-                " where licence_id IN (Select licence_id from software" +
-                " where software_id NOT IN (Select software_id from installed_software) " +
-                $"and software_technical_details_id = (Select software_technical_details_id from software_technical_details where software_name = \"{softwareName}\"))");
+                "left JOIN employee on employee.employee_id = licence.employee_id" +
+                " where licence_id IN(Select licence_id from software " +
+                $"where software_technical_details_id = (Select software_technical_details_id from software_technical_details where software_name = \"{softwareName}\"))" +
+                "and licence_details.licence_count > '0'");
         }
         bool ChangeDataIntoDB(params string[] commands)
         {
@@ -226,13 +229,13 @@ namespace accounting_sw
             return ChangeDataIntoDB("INSERT into computer (audience_id, computer_number, computer_ip, computer_processor, computer_videocard, computer_ram, computer_totalspace) " +
                 $"values((Select audience_id from audience where audience_number = \"{audienceNumber}\"), \"{number}\", \"{ip}\", \"{processor}\", \"{videocard}\", \"{ram}\", \"{totalspace}\")");           
         }
-        public bool InsertNewLicence(string typeName, string employeeFullName, string softwareName, string key, DateTime datestart, DateTime dateEnd, string price)
+        public bool InsertNewLicence(string typeName, string employeeFullName, string softwareName, string key, DateTime datestart, DateTime dateEnd, string price, int count)
         {
-            return (ChangeDataIntoDB(InsertNewLicenceDetails(key, datestart, dateEnd, price), InsertNewLicence(typeName, key, employeeFullName), InsertNewLicenceToSoftware(softwareName, key)));               
+            return (ChangeDataIntoDB(InsertNewLicenceDetails(key, datestart, dateEnd, price, count), InsertNewLicence(typeName, key, employeeFullName), InsertNewLicenceToSoftware(softwareName, key)));               
         }
-        private string InsertNewLicenceDetails(string key, DateTime datestart, DateTime dateEnd, string price)
+        private string InsertNewLicenceDetails(string key, DateTime datestart, DateTime dateEnd, string price, int count)
         {
-            return $"insert into licence_details (licence_key, licence_date_start, licence_date_end, licence_price) values (\"{key}\", \"{datestart}\", \"{dateEnd}\", \"{price}\")";
+            return $"insert into licence_details (licence_key, licence_date_start, licence_date_end, licence_price, licence_count) values (\"{key}\", \"{datestart}\", \"{dateEnd}\", \"{price}\", \"{count}\")";
         }
         private string InsertNewLicence(string typeName, string key, string employeeFullName)
         {
@@ -358,10 +361,10 @@ namespace accounting_sw
                 $" and licence_id = (select licence_id from licence where licence_details_id = (Select licence_details_id from licence_details where licence_key = \"{oldKey}\")))");
         }
         
-        public bool UpdateLicence( string licenceTypeName, string employeeFullName, string newLicenceKey, string dateStart, string dateEnd, string price, string oldKey)
+        public bool UpdateLicence( string licenceTypeName, string employeeFullName, string newLicenceKey, string dateStart, string dateEnd, string price, int count, string oldKey)
         {
             return ChangeDataIntoDB(UpdateLicenceTypeInCurrentLicence(licenceTypeName, oldKey),
-                UpdateEmployeeInCurrentLicence(employeeFullName, oldKey), UpdateLicenceDetailsInCurrentLicence(newLicenceKey, dateStart, dateEnd, price, oldKey));
+                UpdateEmployeeInCurrentLicence(employeeFullName, oldKey), UpdateLicenceDetailsInCurrentLicence(newLicenceKey, dateStart, dateEnd, price, count, oldKey));
         }
         private string UpdateLicenceTypeInCurrentLicence(string licenceTypeName, string oldLicenceKey)
         {
@@ -375,15 +378,15 @@ namespace accounting_sw
                 $"where employee_name = \"{employee[0]}\" and employee_surname = \"{employee[1]}\" and employee_patronymic = \"{employee[2]}\") " +
                 $"where licence_details_id = (Select licence_details_id from licence_details where licence_key = \"{oldLicenceKey}\");";
         }
-        private string UpdateLicenceDetailsInCurrentLicence(string newLicenceKey, string dateStart, string dateEnd, string price, string oldKey)
+        private string UpdateLicenceDetailsInCurrentLicence(string newLicenceKey, string dateStart, string dateEnd, string price, int count, string oldKey)
         {
-            return $"update licence_details set licence_key = \"{newLicenceKey}\", licence_date_start = \"{dateStart}\", licence_date_end = \"{dateEnd}\", licence_price = \"{price}\" where licence_key = \"{oldKey}\";";
+            return $"update licence_details set licence_key = \"{newLicenceKey}\", licence_date_start = \"{dateStart}\", licence_date_end = \"{dateEnd}\", licence_price = \"{price}\", licence_count = \"{count}\" where licence_key = \"{oldKey}\";";
         }
         public bool DeleteInstalledSoftware(string computerNumber, string key)
         {
             return ChangeDataIntoDB($"Delete from installed_software where computer_id = (Select computer_id from computer where computer_number = \"{computerNumber}\")" +
                 $" and software_id = (Select software_id from software where licence_id = (Select licence_id from licence " +
-                $"where licence_details_id = (Select licence_details_id from licence_details where licence_key = \"{key}\")))");
+                $"where licence_details_id = (Select licence_details_id from licence_details where licence_key = \"{key}\"))) limit 1");
         }
         public bool DeleteEmployeeFromDB(string employeeFullName)
         {
@@ -392,7 +395,7 @@ namespace accounting_sw
         }
         public bool DeleteAudienceFromDB(string audienceNum)
         {
-            return ChangeDataIntoDB($"detele from audience where audience_number = \"{audienceNum}\"");
+            return ChangeDataIntoDB($"delete from audience where audience_number = \"{audienceNum}\"");
         }
         public bool DeleteComputerFromDB(string computerNum)
         {
@@ -412,7 +415,7 @@ namespace accounting_sw
         }
         public bool DeleteSoftwareFromDB(string softwareName)
         {
-            return ChangeDataIntoDB($"delete from software_technical_details where software_nam = \"{softwareName}\"");
+            return ChangeDataIntoDB($"delete from software_technical_details where software_name = \"{softwareName}\"");
         }
         public DataTable SelectSoftwareBySubjectArea(string subjectArea)
         {

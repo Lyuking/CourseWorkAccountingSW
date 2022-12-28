@@ -46,7 +46,10 @@ namespace accounting_sw.DataChangerForms
             this.labelPrice = new System.Windows.Forms.Label();
             this.labelDateStart = new System.Windows.Forms.Label();
             this.labelDateEnd = new System.Windows.Forms.Label();
+            this.numericUpDownLicenceCount = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLicences)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLicenceCount)).BeginInit();
             this.SuspendLayout();
             // 
             // comboBoxSelectSoftware
@@ -80,6 +83,7 @@ namespace accounting_sw.DataChangerForms
             // textBoxKey
             // 
             this.textBoxKey.Location = new System.Drawing.Point(119, 474);
+            this.textBoxKey.MaxLength = 255;
             this.textBoxKey.Name = "textBoxKey";
             this.textBoxKey.Size = new System.Drawing.Size(189, 20);
             this.textBoxKey.TabIndex = 3;
@@ -87,6 +91,7 @@ namespace accounting_sw.DataChangerForms
             // textBoxPrice
             // 
             this.textBoxPrice.Location = new System.Drawing.Point(119, 522);
+            this.textBoxPrice.MaxLength = 255;
             this.textBoxPrice.Name = "textBoxPrice";
             this.textBoxPrice.Size = new System.Drawing.Size(189, 20);
             this.textBoxPrice.TabIndex = 4;
@@ -107,7 +112,7 @@ namespace accounting_sw.DataChangerForms
             // 
             // buttonAddLicence
             // 
-            this.buttonAddLicence.Location = new System.Drawing.Point(119, 678);
+            this.buttonAddLicence.Location = new System.Drawing.Point(115, 692);
             this.buttonAddLicence.Name = "buttonAddLicence";
             this.buttonAddLicence.Size = new System.Drawing.Size(75, 23);
             this.buttonAddLicence.TabIndex = 7;
@@ -117,6 +122,8 @@ namespace accounting_sw.DataChangerForms
             // 
             // dataGridViewLicences
             // 
+            this.dataGridViewLicences.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dataGridViewLicences.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridViewLicences.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewLicences.Location = new System.Drawing.Point(12, 28);
             this.dataGridViewLicences.Name = "dataGridViewLicences";
@@ -126,7 +133,7 @@ namespace accounting_sw.DataChangerForms
             // 
             // buttonUpdateLicence
             // 
-            this.buttonUpdateLicence.Location = new System.Drawing.Point(233, 678);
+            this.buttonUpdateLicence.Location = new System.Drawing.Point(233, 692);
             this.buttonUpdateLicence.Name = "buttonUpdateLicence";
             this.buttonUpdateLicence.Size = new System.Drawing.Size(75, 23);
             this.buttonUpdateLicence.TabIndex = 9;
@@ -155,7 +162,7 @@ namespace accounting_sw.DataChangerForms
             // labelEmp
             // 
             this.labelEmp.AutoSize = true;
-            this.labelEmp.Location = new System.Drawing.Point(116, 402);
+            this.labelEmp.Location = new System.Drawing.Point(112, 402);
             this.labelEmp.Name = "labelEmp";
             this.labelEmp.Size = new System.Drawing.Size(199, 13);
             this.labelEmp.TabIndex = 12;
@@ -197,11 +204,34 @@ namespace accounting_sw.DataChangerForms
             this.labelDateEnd.TabIndex = 16;
             this.labelDateEnd.Text = "Дата окончания:";
             // 
+            // numericUpDownLicenceCount
+            // 
+            this.numericUpDownLicenceCount.Location = new System.Drawing.Point(233, 654);
+            this.numericUpDownLicenceCount.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDownLicenceCount.Name = "numericUpDownLicenceCount";
+            this.numericUpDownLicenceCount.Size = new System.Drawing.Size(70, 20);
+            this.numericUpDownLicenceCount.TabIndex = 17;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(116, 656);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(69, 13);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Количество:";
+            // 
             // LicenceChanger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(463, 727);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.numericUpDownLicenceCount);
             this.Controls.Add(this.labelDateEnd);
             this.Controls.Add(this.labelDateStart);
             this.Controls.Add(this.labelPrice);
@@ -219,9 +249,12 @@ namespace accounting_sw.DataChangerForms
             this.Controls.Add(this.comboBoxSelectEmployee);
             this.Controls.Add(this.comboBoxSelectLicenceType);
             this.Controls.Add(this.comboBoxSelectSoftware);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "LicenceChanger";
             this.Text = "Добавление и изменение лицензии";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLicences)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLicenceCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -246,5 +279,7 @@ namespace accounting_sw.DataChangerForms
         private System.Windows.Forms.Label labelPrice;
         private System.Windows.Forms.Label labelDateStart;
         private System.Windows.Forms.Label labelDateEnd;
+        private System.Windows.Forms.NumericUpDown numericUpDownLicenceCount;
+        private System.Windows.Forms.Label label1;
     }
 }

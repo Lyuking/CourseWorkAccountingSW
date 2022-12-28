@@ -34,24 +34,31 @@ namespace accounting_sw.DataChangerForms
 
         private void buttonAddLicence_Click(object sender, EventArgs e)
         {
-            if (comboBoxSelectEmployee.Text != "" && comboBoxSelectLicenceType.Text != "" & comboBoxSelectLicenceType.Text != "" && textBoxKey.Text != "")
-                try
-                {
-                    sqLiteWorker.InsertNewLicence(comboBoxSelectLicenceType.Text, comboBoxSelectEmployee.Text, comboBoxSelectSoftware.Text, textBoxKey.Text, dateTimePickerStartToAddLicence.Value.Date,
-                        dateTimePickerEndToAddLicence.Value.Date, textBoxPrice.Text);
-                    FillLicencesFromDB();
-                }
-                catch (Exception ex)
-                {
-                    if (ex.Message.StartsWith(MainForm.uniqueErrorMessage))
+            if (dateTimePickerStartToAddLicence.Value.Date <= dateTimePickerEndToAddLicence.Value.Date)
+            {
+                if (comboBoxSelectEmployee.Text != "" && comboBoxSelectLicenceType.Text != "" & comboBoxSelectLicenceType.Text != "" && textBoxKey.Text != "")
+                    try
                     {
-                        MessageBox.Show("Указанный ключ уже используется. Возможно, ПО уже установлено", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        sqLiteWorker.InsertNewLicence(comboBoxSelectLicenceType.Text, comboBoxSelectEmployee.Text, comboBoxSelectSoftware.Text, textBoxKey.Text, dateTimePickerStartToAddLicence.Value.Date,
+                            dateTimePickerEndToAddLicence.Value.Date, textBoxPrice.Text, (int)numericUpDownLicenceCount.Value);
+                        FillLicencesFromDB();
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("Неизвестная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (ex.Message.StartsWith(MainForm.uniqueErrorMessage))
+                        {
+                            MessageBox.Show("Указанный ключ уже используется. Возможно, ПО уже установлено", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Неизвестная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
-                }
+            }
+            else
+            {
+                MessageBox.Show("Дата начала лицензии не может быть позднее даты её окончания.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void comboBoxSelectSoftware_SelectedIndexChanged(object sender, EventArgs e)
@@ -66,32 +73,39 @@ namespace accounting_sw.DataChangerForms
 
         private void buttonUpdateLicence_Click(object sender, EventArgs e)
         {
-            if(comboBoxSelectLicenceType.Text != "" && comboBoxSelectEmployee.Text != "" && textBoxKey.Text != "" && dataGridViewLicences.DataSource != null && dataGridViewLicences.Rows.Count > 0)
-            try
+            if (dateTimePickerStartToAddLicence.Value.Date <= dateTimePickerEndToAddLicence.Value.Date)
             {
-                    if (dataGridViewLicences.Rows.Count > 0)
+                if (comboBoxSelectLicenceType.Text != "" && comboBoxSelectEmployee.Text != "" && textBoxKey.Text != "" && dataGridViewLicences.DataSource != null && dataGridViewLicences.Rows.Count > 0)
+                    try
                     {
-                        int currentRowIndex = dataGridViewLicences.CurrentCell.RowIndex;
-                        if (currentRowIndex >= 0)
+                        if (dataGridViewLicences.Rows.Count > 0)
                         {
-                            sqLiteWorker.UpdateLicence(comboBoxSelectLicenceType.Text, comboBoxSelectEmployee.Text, textBoxKey.Text, dateTimePickerStartToAddLicence.Text, dateTimePickerEndToAddLicence.Text,
-                                textBoxPrice.Text, dataGridViewLicences.Rows[currentRowIndex].Cells[dataGridViewLicences.Columns.Count - 5].Value.ToString());
-                            FillLicencesFromDB();
+                            int currentRowIndex = dataGridViewLicences.CurrentCell.RowIndex;
+                            if (currentRowIndex >= 0)
+                            {
+                                sqLiteWorker.UpdateLicence(comboBoxSelectLicenceType.Text, comboBoxSelectEmployee.Text, textBoxKey.Text, dateTimePickerStartToAddLicence.Text, dateTimePickerEndToAddLicence.Text,
+                                    textBoxPrice.Text, (int)numericUpDownLicenceCount.Value, dataGridViewLicences.Rows[currentRowIndex].Cells[dataGridViewLicences.Columns.Count - 6].Value.ToString());
+                                FillLicencesFromDB();
+                            }
+                            else
+                                MessageBox.Show("Выберите лицензию для изменения");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.StartsWith(MainForm.uniqueErrorMessage))
+                        {
+                            MessageBox.Show("Указанный ключ уже используется. Возможно, ПО уже установлено", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         else
-                            MessageBox.Show("Выберите лицензию для изменения");
+                        {
+                            MessageBox.Show("Неизвестная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
             }
-            catch (Exception ex)
+            else
             {
-                if (ex.Message.StartsWith(MainForm.uniqueErrorMessage))
-                {
-                    MessageBox.Show("Указанный ключ уже используется. Возможно, ПО уже установлено", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    MessageBox.Show("Неизвестная ошибка", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show("Дата начала лицензии не может быть позднее даты её окончания.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

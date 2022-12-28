@@ -29,7 +29,7 @@ namespace accounting_sw.DataChangerForms
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Аудитория");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Аудитория");
             this.dataGridViewInstalledLicences = new System.Windows.Forms.DataGridView();
             this.treeViewAudiencesAndPCs = new System.Windows.Forms.TreeView();
             this.comboBoxSoftwareName = new System.Windows.Forms.ComboBox();
@@ -39,6 +39,7 @@ namespace accounting_sw.DataChangerForms
             // 
             // dataGridViewInstalledLicences
             // 
+            this.dataGridViewInstalledLicences.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridViewInstalledLicences.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewInstalledLicences.Location = new System.Drawing.Point(203, 12);
             this.dataGridViewInstalledLicences.Name = "dataGridViewInstalledLicences";
@@ -50,10 +51,10 @@ namespace accounting_sw.DataChangerForms
             // 
             this.treeViewAudiencesAndPCs.Location = new System.Drawing.Point(12, 51);
             this.treeViewAudiencesAndPCs.Name = "treeViewAudiencesAndPCs";
-            treeNode1.Name = "AudienceNumber";
-            treeNode1.Text = "Аудитория";
+            treeNode2.Name = "AudienceNumber";
+            treeNode2.Text = "Аудитория";
             this.treeViewAudiencesAndPCs.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode2});
             this.treeViewAudiencesAndPCs.Size = new System.Drawing.Size(164, 259);
             this.treeViewAudiencesAndPCs.TabIndex = 1;
             // 
@@ -86,6 +87,8 @@ namespace accounting_sw.DataChangerForms
             this.Controls.Add(this.comboBoxSoftwareName);
             this.Controls.Add(this.treeViewAudiencesAndPCs);
             this.Controls.Add(this.dataGridViewInstalledLicences);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "InstalledSoftwareChanger";
             this.Text = "Добавление ПО на компьютер";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewInstalledLicences)).EndInit();

@@ -29,8 +29,8 @@ namespace accounting_sw
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Аудитория");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Аудитория");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Аудитория");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Аудитория");
             this.tabControlSoftwareAndLicence = new System.Windows.Forms.TabControl();
             this.tabPageInstalledSoftByPC = new System.Windows.Forms.TabPage();
             this.buttonDeleteInstaledSoftwareFromPCFromDB = new System.Windows.Forms.Button();
@@ -65,6 +65,7 @@ namespace accounting_sw
             this.textBoxLicenceTypeName = new System.Windows.Forms.TextBox();
             this.dataGridViewLicenceType = new System.Windows.Forms.DataGridView();
             this.tabPageComputers = new System.Windows.Forms.TabPage();
+            this.maskedTextBoxPCIP = new System.Windows.Forms.MaskedTextBox();
             this.labelPCSpace = new System.Windows.Forms.Label();
             this.labelPCRAM = new System.Windows.Forms.Label();
             this.labelPCVideo = new System.Windows.Forms.Label();
@@ -77,7 +78,6 @@ namespace accounting_sw
             this.textBoxPCRAM = new System.Windows.Forms.TextBox();
             this.textBoxPCVideo = new System.Windows.Forms.TextBox();
             this.textBoxPCProc = new System.Windows.Forms.TextBox();
-            this.textBoxPCIP = new System.Windows.Forms.TextBox();
             this.buttonDeletePC = new System.Windows.Forms.Button();
             this.buttonUpdatePC = new System.Windows.Forms.Button();
             this.buttonInsertPC = new System.Windows.Forms.Button();
@@ -135,8 +135,8 @@ namespace accounting_sw
             // 
             // tabControlSoftwareAndLicence
             // 
-            this.tabControlSoftwareAndLicence.Controls.Add(this.tabPageInstalledSoftByPC);
             this.tabControlSoftwareAndLicence.Controls.Add(this.tabPageInstalledSoftByAud);
+            this.tabControlSoftwareAndLicence.Controls.Add(this.tabPageInstalledSoftByPC);
             this.tabControlSoftwareAndLicence.Controls.Add(this.tapPageSoftwareTotal);
             this.tabControlSoftwareAndLicence.Controls.Add(this.tabPageComputers);
             this.tabControlSoftwareAndLicence.Controls.Add(this.tabPageAudience);
@@ -187,16 +187,18 @@ namespace accounting_sw
             // 
             this.treeViewInstalledSoftByAudAndPC.Location = new System.Drawing.Point(6, 6);
             this.treeViewInstalledSoftByAudAndPC.Name = "treeViewInstalledSoftByAudAndPC";
-            treeNode5.Name = "Audience";
-            treeNode5.Text = "Аудитория";
+            treeNode3.Name = "Audience";
+            treeNode3.Text = "Аудитория";
             this.treeViewInstalledSoftByAudAndPC.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode5});
+            treeNode3});
             this.treeViewInstalledSoftByAudAndPC.Size = new System.Drawing.Size(214, 298);
             this.treeViewInstalledSoftByAudAndPC.TabIndex = 1;
             this.treeViewInstalledSoftByAudAndPC.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewInstalledSoftByAudAndPC_NodeMouseClick);
             // 
             // dataGridViewLicenceFromCurrentSoftFromPC
             // 
+            this.dataGridViewLicenceFromCurrentSoftFromPC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dataGridViewLicenceFromCurrentSoftFromPC.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridViewLicenceFromCurrentSoftFromPC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewLicenceFromCurrentSoftFromPC.Location = new System.Drawing.Point(325, 6);
             this.dataGridViewLicenceFromCurrentSoftFromPC.Name = "dataGridViewLicenceFromCurrentSoftFromPC";
@@ -220,10 +222,10 @@ namespace accounting_sw
             // 
             this.treeViewInstalledSoftByAud.Location = new System.Drawing.Point(3, 8);
             this.treeViewInstalledSoftByAud.Name = "treeViewInstalledSoftByAud";
-            treeNode6.Name = "Audience";
-            treeNode6.Text = "Аудитория";
+            treeNode4.Name = "Audience";
+            treeNode4.Text = "Аудитория";
             this.treeViewInstalledSoftByAud.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode6});
+            treeNode4});
             this.treeViewInstalledSoftByAud.Size = new System.Drawing.Size(214, 388);
             this.treeViewInstalledSoftByAud.TabIndex = 3;
             this.treeViewInstalledSoftByAud.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewInstalledSoftByAud_NodeMouseClick);
@@ -232,6 +234,7 @@ namespace accounting_sw
             // 
             this.dataGridViewLicenceFromCurrentSoftFromAud.AllowUserToAddRows = false;
             this.dataGridViewLicenceFromCurrentSoftFromAud.AllowUserToDeleteRows = false;
+            this.dataGridViewLicenceFromCurrentSoftFromAud.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridViewLicenceFromCurrentSoftFromAud.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewLicenceFromCurrentSoftFromAud.Location = new System.Drawing.Point(403, 8);
             this.dataGridViewLicenceFromCurrentSoftFromAud.MultiSelect = false;
@@ -332,6 +335,7 @@ namespace accounting_sw
             // 
             // dataGridViewLicencesFromSoft
             // 
+            this.dataGridViewLicencesFromSoft.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridViewLicencesFromSoft.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewLicencesFromSoft.Location = new System.Drawing.Point(628, 6);
             this.dataGridViewLicencesFromSoft.Name = "dataGridViewLicencesFromSoft";
@@ -341,6 +345,7 @@ namespace accounting_sw
             // 
             // dataGridViewSoftware
             // 
+            this.dataGridViewSoftware.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridViewSoftware.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewSoftware.Location = new System.Drawing.Point(6, 6);
             this.dataGridViewSoftware.Name = "dataGridViewSoftware";
@@ -368,7 +373,7 @@ namespace accounting_sw
             // labelSubjectAreaName
             // 
             this.labelSubjectAreaName.AutoSize = true;
-            this.labelSubjectAreaName.Location = new System.Drawing.Point(246, 13);
+            this.labelSubjectAreaName.Location = new System.Drawing.Point(204, 15);
             this.labelSubjectAreaName.Name = "labelSubjectAreaName";
             this.labelSubjectAreaName.Size = new System.Drawing.Size(86, 13);
             this.labelSubjectAreaName.TabIndex = 23;
@@ -376,7 +381,7 @@ namespace accounting_sw
             // 
             // buttonDeleteSubjectArea
             // 
-            this.buttonDeleteSubjectArea.Location = new System.Drawing.Point(258, 158);
+            this.buttonDeleteSubjectArea.Location = new System.Drawing.Point(207, 158);
             this.buttonDeleteSubjectArea.Name = "buttonDeleteSubjectArea";
             this.buttonDeleteSubjectArea.Size = new System.Drawing.Size(100, 23);
             this.buttonDeleteSubjectArea.TabIndex = 19;
@@ -386,7 +391,7 @@ namespace accounting_sw
             // 
             // buttonUpdateSubjectArea
             // 
-            this.buttonUpdateSubjectArea.Location = new System.Drawing.Point(258, 117);
+            this.buttonUpdateSubjectArea.Location = new System.Drawing.Point(207, 117);
             this.buttonUpdateSubjectArea.Name = "buttonUpdateSubjectArea";
             this.buttonUpdateSubjectArea.Size = new System.Drawing.Size(100, 23);
             this.buttonUpdateSubjectArea.TabIndex = 18;
@@ -396,7 +401,7 @@ namespace accounting_sw
             // 
             // buttonInsertSubjectArea
             // 
-            this.buttonInsertSubjectArea.Location = new System.Drawing.Point(258, 76);
+            this.buttonInsertSubjectArea.Location = new System.Drawing.Point(207, 76);
             this.buttonInsertSubjectArea.Name = "buttonInsertSubjectArea";
             this.buttonInsertSubjectArea.Size = new System.Drawing.Size(100, 23);
             this.buttonInsertSubjectArea.TabIndex = 17;
@@ -406,18 +411,21 @@ namespace accounting_sw
             // 
             // textBoxSubjectAreaName
             // 
-            this.textBoxSubjectAreaName.Location = new System.Drawing.Point(249, 40);
+            this.textBoxSubjectAreaName.Location = new System.Drawing.Point(198, 40);
+            this.textBoxSubjectAreaName.MaxLength = 100;
             this.textBoxSubjectAreaName.Name = "textBoxSubjectAreaName";
             this.textBoxSubjectAreaName.Size = new System.Drawing.Size(118, 20);
             this.textBoxSubjectAreaName.TabIndex = 1;
             // 
             // dataGridViewSubjectArea
             // 
+            this.dataGridViewSubjectArea.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewSubjectArea.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridViewSubjectArea.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewSubjectArea.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewSubjectArea.Name = "dataGridViewSubjectArea";
             this.dataGridViewSubjectArea.ReadOnly = true;
-            this.dataGridViewSubjectArea.Size = new System.Drawing.Size(240, 362);
+            this.dataGridViewSubjectArea.Size = new System.Drawing.Size(186, 386);
             this.dataGridViewSubjectArea.TabIndex = 0;
             this.dataGridViewSubjectArea.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewSubjectArea_CellClick);
             // 
@@ -440,7 +448,7 @@ namespace accounting_sw
             // labelLicenceTypeName
             // 
             this.labelLicenceTypeName.AutoSize = true;
-            this.labelLicenceTypeName.Location = new System.Drawing.Point(252, 12);
+            this.labelLicenceTypeName.Location = new System.Drawing.Point(216, 16);
             this.labelLicenceTypeName.Name = "labelLicenceTypeName";
             this.labelLicenceTypeName.Size = new System.Drawing.Size(86, 13);
             this.labelLicenceTypeName.TabIndex = 22;
@@ -448,7 +456,7 @@ namespace accounting_sw
             // 
             // buttonDeleteLicenceType
             // 
-            this.buttonDeleteLicenceType.Location = new System.Drawing.Point(267, 165);
+            this.buttonDeleteLicenceType.Location = new System.Drawing.Point(219, 164);
             this.buttonDeleteLicenceType.Name = "buttonDeleteLicenceType";
             this.buttonDeleteLicenceType.Size = new System.Drawing.Size(100, 23);
             this.buttonDeleteLicenceType.TabIndex = 21;
@@ -458,7 +466,7 @@ namespace accounting_sw
             // 
             // buttonUpdateLicenceType
             // 
-            this.buttonUpdateLicenceType.Location = new System.Drawing.Point(267, 124);
+            this.buttonUpdateLicenceType.Location = new System.Drawing.Point(219, 123);
             this.buttonUpdateLicenceType.Name = "buttonUpdateLicenceType";
             this.buttonUpdateLicenceType.Size = new System.Drawing.Size(100, 23);
             this.buttonUpdateLicenceType.TabIndex = 20;
@@ -468,7 +476,7 @@ namespace accounting_sw
             // 
             // buttonInsertLicenceType
             // 
-            this.buttonInsertLicenceType.Location = new System.Drawing.Point(267, 78);
+            this.buttonInsertLicenceType.Location = new System.Drawing.Point(219, 77);
             this.buttonInsertLicenceType.Name = "buttonInsertLicenceType";
             this.buttonInsertLicenceType.Size = new System.Drawing.Size(100, 23);
             this.buttonInsertLicenceType.TabIndex = 2;
@@ -478,22 +486,26 @@ namespace accounting_sw
             // 
             // textBoxLicenceTypeName
             // 
-            this.textBoxLicenceTypeName.Location = new System.Drawing.Point(252, 37);
+            this.textBoxLicenceTypeName.Location = new System.Drawing.Point(205, 41);
+            this.textBoxLicenceTypeName.MaxLength = 100;
             this.textBoxLicenceTypeName.Name = "textBoxLicenceTypeName";
-            this.textBoxLicenceTypeName.Size = new System.Drawing.Size(129, 20);
+            this.textBoxLicenceTypeName.Size = new System.Drawing.Size(128, 20);
             this.textBoxLicenceTypeName.TabIndex = 1;
             // 
             // dataGridViewLicenceType
             // 
+            this.dataGridViewLicenceType.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewLicenceType.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridViewLicenceType.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewLicenceType.Location = new System.Drawing.Point(6, 12);
+            this.dataGridViewLicenceType.Location = new System.Drawing.Point(6, 3);
             this.dataGridViewLicenceType.Name = "dataGridViewLicenceType";
             this.dataGridViewLicenceType.ReadOnly = true;
-            this.dataGridViewLicenceType.Size = new System.Drawing.Size(240, 360);
+            this.dataGridViewLicenceType.Size = new System.Drawing.Size(192, 386);
             this.dataGridViewLicenceType.TabIndex = 0;
             // 
             // tabPageComputers
             // 
+            this.tabPageComputers.Controls.Add(this.maskedTextBoxPCIP);
             this.tabPageComputers.Controls.Add(this.labelPCSpace);
             this.tabPageComputers.Controls.Add(this.labelPCRAM);
             this.tabPageComputers.Controls.Add(this.labelPCVideo);
@@ -506,7 +518,6 @@ namespace accounting_sw
             this.tabPageComputers.Controls.Add(this.textBoxPCRAM);
             this.tabPageComputers.Controls.Add(this.textBoxPCVideo);
             this.tabPageComputers.Controls.Add(this.textBoxPCProc);
-            this.tabPageComputers.Controls.Add(this.textBoxPCIP);
             this.tabPageComputers.Controls.Add(this.buttonDeletePC);
             this.tabPageComputers.Controls.Add(this.buttonUpdatePC);
             this.tabPageComputers.Controls.Add(this.buttonInsertPC);
@@ -519,6 +530,14 @@ namespace accounting_sw
             this.tabPageComputers.Text = "Компьютеры";
             this.tabPageComputers.UseVisualStyleBackColor = true;
             this.tabPageComputers.Enter += new System.EventHandler(this.tabPageComputers_Enter);
+            // 
+            // maskedTextBoxPCIP
+            // 
+            this.maskedTextBoxPCIP.Location = new System.Drawing.Point(700, 126);
+            this.maskedTextBoxPCIP.Mask = "###.###.###.###";
+            this.maskedTextBoxPCIP.Name = "maskedTextBoxPCIP";
+            this.maskedTextBoxPCIP.Size = new System.Drawing.Size(140, 20);
+            this.maskedTextBoxPCIP.TabIndex = 30;
             // 
             // labelPCSpace
             // 
@@ -559,7 +578,7 @@ namespace accounting_sw
             // labelPCIP
             // 
             this.labelPCIP.AutoSize = true;
-            this.labelPCIP.Location = new System.Drawing.Point(697, 122);
+            this.labelPCIP.Location = new System.Drawing.Point(697, 110);
             this.labelPCIP.Name = "labelPCIP";
             this.labelPCIP.Size = new System.Drawing.Size(53, 13);
             this.labelPCIP.TabIndex = 25;
@@ -595,6 +614,7 @@ namespace accounting_sw
             // textBoxPCTotalSpace
             // 
             this.textBoxPCTotalSpace.Location = new System.Drawing.Point(700, 294);
+            this.textBoxPCTotalSpace.MaxLength = 255;
             this.textBoxPCTotalSpace.Name = "textBoxPCTotalSpace";
             this.textBoxPCTotalSpace.Size = new System.Drawing.Size(140, 20);
             this.textBoxPCTotalSpace.TabIndex = 21;
@@ -602,6 +622,7 @@ namespace accounting_sw
             // textBoxPCRAM
             // 
             this.textBoxPCRAM.Location = new System.Drawing.Point(700, 255);
+            this.textBoxPCRAM.MaxLength = 255;
             this.textBoxPCRAM.Name = "textBoxPCRAM";
             this.textBoxPCRAM.Size = new System.Drawing.Size(140, 20);
             this.textBoxPCRAM.TabIndex = 20;
@@ -609,6 +630,7 @@ namespace accounting_sw
             // textBoxPCVideo
             // 
             this.textBoxPCVideo.Location = new System.Drawing.Point(700, 216);
+            this.textBoxPCVideo.MaxLength = 255;
             this.textBoxPCVideo.Name = "textBoxPCVideo";
             this.textBoxPCVideo.Size = new System.Drawing.Size(140, 20);
             this.textBoxPCVideo.TabIndex = 19;
@@ -616,16 +638,10 @@ namespace accounting_sw
             // textBoxPCProc
             // 
             this.textBoxPCProc.Location = new System.Drawing.Point(700, 177);
+            this.textBoxPCProc.MaxLength = 255;
             this.textBoxPCProc.Name = "textBoxPCProc";
             this.textBoxPCProc.Size = new System.Drawing.Size(140, 20);
             this.textBoxPCProc.TabIndex = 18;
-            // 
-            // textBoxPCIP
-            // 
-            this.textBoxPCIP.Location = new System.Drawing.Point(700, 138);
-            this.textBoxPCIP.Name = "textBoxPCIP";
-            this.textBoxPCIP.Size = new System.Drawing.Size(140, 20);
-            this.textBoxPCIP.TabIndex = 17;
             // 
             // buttonDeletePC
             // 
@@ -660,12 +676,15 @@ namespace accounting_sw
             // textBoxPCNum
             // 
             this.textBoxPCNum.Location = new System.Drawing.Point(700, 69);
+            this.textBoxPCNum.MaxLength = 20;
             this.textBoxPCNum.Name = "textBoxPCNum";
             this.textBoxPCNum.Size = new System.Drawing.Size(140, 20);
             this.textBoxPCNum.TabIndex = 13;
             // 
             // dataGridViewComputer
             // 
+            this.dataGridViewComputer.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dataGridViewComputer.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridViewComputer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewComputer.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewComputer.Name = "dataGridViewComputer";
@@ -693,7 +712,7 @@ namespace accounting_sw
             // labelAudienceName
             // 
             this.labelAudienceName.AutoSize = true;
-            this.labelAudienceName.Location = new System.Drawing.Point(324, 80);
+            this.labelAudienceName.Location = new System.Drawing.Point(203, 18);
             this.labelAudienceName.Name = "labelAudienceName";
             this.labelAudienceName.Size = new System.Drawing.Size(86, 13);
             this.labelAudienceName.TabIndex = 13;
@@ -701,7 +720,7 @@ namespace accounting_sw
             // 
             // buttonDeleteAudience
             // 
-            this.buttonDeleteAudience.Location = new System.Drawing.Point(324, 257);
+            this.buttonDeleteAudience.Location = new System.Drawing.Point(203, 195);
             this.buttonDeleteAudience.Name = "buttonDeleteAudience";
             this.buttonDeleteAudience.Size = new System.Drawing.Size(100, 23);
             this.buttonDeleteAudience.TabIndex = 12;
@@ -711,7 +730,7 @@ namespace accounting_sw
             // 
             // buttonUpdateAudience
             // 
-            this.buttonUpdateAudience.Location = new System.Drawing.Point(324, 206);
+            this.buttonUpdateAudience.Location = new System.Drawing.Point(203, 144);
             this.buttonUpdateAudience.Name = "buttonUpdateAudience";
             this.buttonUpdateAudience.Size = new System.Drawing.Size(100, 23);
             this.buttonUpdateAudience.TabIndex = 11;
@@ -721,7 +740,7 @@ namespace accounting_sw
             // 
             // buttonInsertAudience
             // 
-            this.buttonInsertAudience.Location = new System.Drawing.Point(324, 153);
+            this.buttonInsertAudience.Location = new System.Drawing.Point(203, 91);
             this.buttonInsertAudience.Name = "buttonInsertAudience";
             this.buttonInsertAudience.Size = new System.Drawing.Size(100, 23);
             this.buttonInsertAudience.TabIndex = 10;
@@ -731,18 +750,21 @@ namespace accounting_sw
             // 
             // textBoxAudienceNumber
             // 
-            this.textBoxAudienceNumber.Location = new System.Drawing.Point(324, 110);
+            this.textBoxAudienceNumber.Location = new System.Drawing.Point(203, 48);
+            this.textBoxAudienceNumber.MaxLength = 20;
             this.textBoxAudienceNumber.Name = "textBoxAudienceNumber";
             this.textBoxAudienceNumber.Size = new System.Drawing.Size(100, 20);
             this.textBoxAudienceNumber.TabIndex = 7;
             // 
             // dataGridViewAudience
             // 
+            this.dataGridViewAudience.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewAudience.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridViewAudience.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewAudience.Location = new System.Drawing.Point(4, 4);
             this.dataGridViewAudience.Name = "dataGridViewAudience";
             this.dataGridViewAudience.ReadOnly = true;
-            this.dataGridViewAudience.Size = new System.Drawing.Size(314, 396);
+            this.dataGridViewAudience.Size = new System.Drawing.Size(193, 396);
             this.dataGridViewAudience.TabIndex = 0;
             this.dataGridViewAudience.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewAudience_CellClick);
             // 
@@ -769,7 +791,7 @@ namespace accounting_sw
             // labelEmployeePatronymic
             // 
             this.labelEmployeePatronymic.AutoSize = true;
-            this.labelEmployeePatronymic.Location = new System.Drawing.Point(373, 109);
+            this.labelEmployeePatronymic.Location = new System.Drawing.Point(358, 110);
             this.labelEmployeePatronymic.Name = "labelEmployeePatronymic";
             this.labelEmployeePatronymic.Size = new System.Drawing.Size(57, 13);
             this.labelEmployeePatronymic.TabIndex = 9;
@@ -778,7 +800,7 @@ namespace accounting_sw
             // labelEmployeeSurname
             // 
             this.labelEmployeeSurname.AutoSize = true;
-            this.labelEmployeeSurname.Location = new System.Drawing.Point(373, 61);
+            this.labelEmployeeSurname.Location = new System.Drawing.Point(358, 62);
             this.labelEmployeeSurname.Name = "labelEmployeeSurname";
             this.labelEmployeeSurname.Size = new System.Drawing.Size(59, 13);
             this.labelEmployeeSurname.TabIndex = 8;
@@ -787,7 +809,7 @@ namespace accounting_sw
             // labelEmployeeName
             // 
             this.labelEmployeeName.AutoSize = true;
-            this.labelEmployeeName.Location = new System.Drawing.Point(373, 14);
+            this.labelEmployeeName.Location = new System.Drawing.Point(358, 15);
             this.labelEmployeeName.Name = "labelEmployeeName";
             this.labelEmployeeName.Size = new System.Drawing.Size(32, 13);
             this.labelEmployeeName.TabIndex = 7;
@@ -795,7 +817,7 @@ namespace accounting_sw
             // 
             // buttonDeleteEmployee
             // 
-            this.buttonDeleteEmployee.Location = new System.Drawing.Point(373, 276);
+            this.buttonDeleteEmployee.Location = new System.Drawing.Point(358, 277);
             this.buttonDeleteEmployee.Name = "buttonDeleteEmployee";
             this.buttonDeleteEmployee.Size = new System.Drawing.Size(100, 23);
             this.buttonDeleteEmployee.TabIndex = 6;
@@ -805,7 +827,7 @@ namespace accounting_sw
             // 
             // buttonUpdateEmployee
             // 
-            this.buttonUpdateEmployee.Location = new System.Drawing.Point(373, 225);
+            this.buttonUpdateEmployee.Location = new System.Drawing.Point(358, 226);
             this.buttonUpdateEmployee.Name = "buttonUpdateEmployee";
             this.buttonUpdateEmployee.Size = new System.Drawing.Size(100, 23);
             this.buttonUpdateEmployee.TabIndex = 5;
@@ -815,7 +837,7 @@ namespace accounting_sw
             // 
             // buttonInsertEmployee
             // 
-            this.buttonInsertEmployee.Location = new System.Drawing.Point(373, 172);
+            this.buttonInsertEmployee.Location = new System.Drawing.Point(358, 173);
             this.buttonInsertEmployee.Name = "buttonInsertEmployee";
             this.buttonInsertEmployee.Size = new System.Drawing.Size(100, 23);
             this.buttonInsertEmployee.TabIndex = 4;
@@ -825,27 +847,32 @@ namespace accounting_sw
             // 
             // textBoxEmployeePatronymic
             // 
-            this.textBoxEmployeePatronymic.Location = new System.Drawing.Point(373, 125);
+            this.textBoxEmployeePatronymic.Location = new System.Drawing.Point(358, 126);
+            this.textBoxEmployeePatronymic.MaxLength = 255;
             this.textBoxEmployeePatronymic.Name = "textBoxEmployeePatronymic";
             this.textBoxEmployeePatronymic.Size = new System.Drawing.Size(100, 20);
             this.textBoxEmployeePatronymic.TabIndex = 3;
             // 
             // textBoxEmployeeSurname
             // 
-            this.textBoxEmployeeSurname.Location = new System.Drawing.Point(373, 77);
+            this.textBoxEmployeeSurname.Location = new System.Drawing.Point(358, 78);
+            this.textBoxEmployeeSurname.MaxLength = 255;
             this.textBoxEmployeeSurname.Name = "textBoxEmployeeSurname";
             this.textBoxEmployeeSurname.Size = new System.Drawing.Size(100, 20);
             this.textBoxEmployeeSurname.TabIndex = 2;
             // 
             // textBoxEmployeeName
             // 
-            this.textBoxEmployeeName.Location = new System.Drawing.Point(373, 33);
+            this.textBoxEmployeeName.Location = new System.Drawing.Point(358, 34);
+            this.textBoxEmployeeName.MaxLength = 255;
             this.textBoxEmployeeName.Name = "textBoxEmployeeName";
             this.textBoxEmployeeName.Size = new System.Drawing.Size(100, 20);
             this.textBoxEmployeeName.TabIndex = 1;
             // 
             // dataGridViewEmployee
             // 
+            this.dataGridViewEmployee.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewEmployee.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridViewEmployee.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewEmployee.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewEmployee.Name = "dataGridViewEmployee";
@@ -924,7 +951,9 @@ namespace accounting_sw
             this.ClientSize = new System.Drawing.Size(967, 474);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.tabControlSoftwareAndLicence);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Учёт ПО";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
@@ -997,7 +1026,6 @@ namespace accounting_sw
         private System.Windows.Forms.TextBox textBoxPCRAM;
         private System.Windows.Forms.TextBox textBoxPCVideo;
         private System.Windows.Forms.TextBox textBoxPCProc;
-        private System.Windows.Forms.TextBox textBoxPCIP;
         private System.Windows.Forms.Button buttonDeletePC;
         private System.Windows.Forms.Button buttonUpdatePC;
         private System.Windows.Forms.Button buttonInsertPC;
@@ -1041,6 +1069,7 @@ namespace accounting_sw
         private System.Windows.Forms.Label labelAudienceNum;
         private System.Windows.Forms.Label labelLicenceTypeName;
         private System.Windows.Forms.Label labelSubjectAreaName;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxPCIP;
     }
 }
 

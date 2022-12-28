@@ -138,8 +138,16 @@ namespace accounting_sw
         }
         private void dataGridViewSoftware_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridViewLicencesFromSoft.DataSource = sQLite.SelectLicenceFromSoftwareFromDB(dataGridViewSoftware.Rows[e.RowIndex].Cells[0].Value.ToString());
-            pictureBoxQR.Image = SelectPhotoFromSoftwareFromDB(e, dataGridViewSoftware);
+            if (RowIndexNotOut(e))
+            {
+                dataGridViewLicencesFromSoft.DataSource = sQLite.SelectLicenceFromSoftwareFromDB(dataGridViewSoftware.Rows[e.RowIndex].Cells[0].Value.ToString());
+                pictureBoxQR.Image = SelectPhotoFromSoftwareFromDB(e, dataGridViewSoftware);
+            }
+        }
+
+        private static bool RowIndexNotOut(DataGridViewCellEventArgs e)
+        {
+            return e.RowIndex >= 0;
         }
 
         //private void dataGridViewAudienceMain_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -161,12 +169,15 @@ namespace accounting_sw
 
         private void dataGridViewComputer_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            textBoxPCNum.Text = dataGridViewComputer.Rows[e.RowIndex].Cells[dataGridViewComputer.Columns.Count - 6].Value.ToString();
-            textBoxPCIP.Text = dataGridViewComputer.Rows[e.RowIndex].Cells[dataGridViewComputer.Columns.Count - 5].Value.ToString();
-            textBoxPCProc.Text = dataGridViewComputer.Rows[e.RowIndex].Cells[dataGridViewComputer.Columns.Count - 4].Value.ToString();
-            textBoxPCVideo.Text = dataGridViewComputer.Rows[e.RowIndex].Cells[dataGridViewComputer.Columns.Count - 3].Value.ToString();
-            textBoxPCRAM.Text = dataGridViewComputer.Rows[e.RowIndex].Cells[dataGridViewComputer.Columns.Count - 2].Value.ToString();
-            textBoxPCTotalSpace.Text = dataGridViewComputer.Rows[e.RowIndex].Cells[dataGridViewComputer.Columns.Count - 1].Value.ToString();
+            if (RowIndexNotOut(e))
+            {
+                textBoxPCNum.Text = dataGridViewComputer.Rows[e.RowIndex].Cells[dataGridViewComputer.Columns.Count - 6].Value.ToString();
+                maskedTextBoxPCIP.Text = dataGridViewComputer.Rows[e.RowIndex].Cells[dataGridViewComputer.Columns.Count - 5].Value.ToString();
+                textBoxPCProc.Text = dataGridViewComputer.Rows[e.RowIndex].Cells[dataGridViewComputer.Columns.Count - 4].Value.ToString();
+                textBoxPCVideo.Text = dataGridViewComputer.Rows[e.RowIndex].Cells[dataGridViewComputer.Columns.Count - 3].Value.ToString();
+                textBoxPCRAM.Text = dataGridViewComputer.Rows[e.RowIndex].Cells[dataGridViewComputer.Columns.Count - 2].Value.ToString();
+                textBoxPCTotalSpace.Text = dataGridViewComputer.Rows[e.RowIndex].Cells[dataGridViewComputer.Columns.Count - 1].Value.ToString();
+            }
         }
 
         private void buttonInsertPC_Click(object sender, EventArgs e)
@@ -175,7 +186,8 @@ namespace accounting_sw
             {
                 try
                 {
-                sQLite.InsertNewPC(comboBoxAudNums.Text, textBoxPCNum.Text, textBoxPCIP.Text, textBoxPCProc.Text, textBoxPCVideo.Text, textBoxPCRAM.Text, textBoxPCTotalSpace.Text);
+                    string ipWithoutBackSpace = GetIpWithoutBackSpaces();
+                    sQLite.InsertNewPC(comboBoxAudNums.Text, textBoxPCNum.Text, ipWithoutBackSpace, textBoxPCProc.Text, textBoxPCVideo.Text, textBoxPCRAM.Text, textBoxPCTotalSpace.Text);
                 }
                 catch (Exception ex)
                 {
@@ -194,6 +206,14 @@ namespace accounting_sw
             {
                 MessageBox.Show("Введите номер аудитории и укажите номер компьютера");
             }
+        }
+
+        private string GetIpWithoutBackSpaces()
+        {
+            string ipWithoutBackSpace = "";
+            if (maskedTextBoxPCIP.Text.Length > 0)
+                ipWithoutBackSpace = maskedTextBoxPCIP.Text.Replace(" ", "");
+            return ipWithoutBackSpace;
         }
 
         private void buttonInsertAudience_Click(object sender, EventArgs e)
@@ -221,14 +241,18 @@ namespace accounting_sw
 
         private void dataGridViewAudience_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            textBoxAudienceNumber.Text = dataGridViewAudience.Rows[e.RowIndex].Cells[dataGridViewAudience.Columns.Count - 1].Value.ToString();
+            if(RowIndexNotOut(e))
+             textBoxAudienceNumber.Text = dataGridViewAudience.Rows[e.RowIndex].Cells[dataGridViewAudience.Columns.Count - 1].Value.ToString();
         }
 
         private void dataGridViewEmployee_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            textBoxEmployeeName.Text = dataGridViewEmployee.Rows[e.RowIndex].Cells[dataGridViewEmployee.Columns.Count - 3].Value.ToString();
-            textBoxEmployeeSurname.Text = dataGridViewEmployee.Rows[e.RowIndex].Cells[dataGridViewEmployee.Columns.Count - 2].Value.ToString();
-            textBoxEmployeePatronymic.Text = dataGridViewEmployee.Rows[e.RowIndex].Cells[dataGridViewEmployee.Columns.Count - 1].Value.ToString();
+            if (RowIndexNotOut(e))
+            {
+                textBoxEmployeeName.Text = dataGridViewEmployee.Rows[e.RowIndex].Cells[dataGridViewEmployee.Columns.Count - 3].Value.ToString();
+                textBoxEmployeeSurname.Text = dataGridViewEmployee.Rows[e.RowIndex].Cells[dataGridViewEmployee.Columns.Count - 2].Value.ToString();
+                textBoxEmployeePatronymic.Text = dataGridViewEmployee.Rows[e.RowIndex].Cells[dataGridViewEmployee.Columns.Count - 1].Value.ToString();
+            }
         }
 
         private void buttonInsertEmployee_Click(object sender, EventArgs e)
@@ -272,6 +296,7 @@ namespace accounting_sw
 
         private void dataGridViewSubjectArea_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if(RowIndexNotOut(e))
             textBoxSubjectAreaName.Text = dataGridViewSubjectArea.Rows[e.RowIndex].Cells[dataGridViewSubjectArea.Columns.Count - 1].Value.ToString();
         }
 
@@ -360,10 +385,11 @@ namespace accounting_sw
             string currentPCNum = dataGridViewComputer.Rows[currentRowIndex].Cells[dataGridViewComputer.Columns.Count - 6].Value.ToString();
             try
             {
+                string ipWithoutAudiences = GetIpWithoutBackSpaces();
                 if (comboBoxAudNums.Text == "" || comboBoxAudNums.Text == null)
-                    sQLite.UpdatePCInDB(currentPCNum, textBoxPCNum.Text, textBoxPCIP.Text, textBoxPCProc.Text, textBoxPCVideo.Text, textBoxPCRAM.Text, textBoxPCTotalSpace.Text);
+                    sQLite.UpdatePCInDB(currentPCNum, textBoxPCNum.Text, ipWithoutAudiences, textBoxPCProc.Text, textBoxPCVideo.Text, textBoxPCRAM.Text, textBoxPCTotalSpace.Text);
                 else
-                    sQLite.UpdatePCInDB(comboBoxAudNums.Text, currentPCNum, textBoxPCNum.Text, textBoxPCIP.Text, textBoxPCProc.Text, textBoxPCVideo.Text, textBoxPCRAM.Text, textBoxPCTotalSpace.Text);
+                    sQLite.UpdatePCInDB(comboBoxAudNums.Text, currentPCNum, textBoxPCNum.Text, ipWithoutAudiences, textBoxPCProc.Text, textBoxPCVideo.Text, textBoxPCRAM.Text, textBoxPCTotalSpace.Text);
             }
             catch (Exception ex)
             {
@@ -512,7 +538,7 @@ namespace accounting_sw
                         try
                         {
                             int currentRowIndex = dataGridViewLicenceFromCurrentSoftFromPC.CurrentCell.RowIndex;
-                            string key = dataGridViewLicenceFromCurrentSoftFromPC.Rows[currentRowIndex].Cells[dataGridViewLicenceFromCurrentSoftFromPC.Columns.Count - 5].Value.ToString();
+                            string key = dataGridViewLicenceFromCurrentSoftFromPC.Rows[currentRowIndex].Cells[1].Value.ToString();
                             sQLite.DeleteInstalledSoftware(treeViewInstalledSoftByAudAndPC.SelectedNode.Parent.Text, key);
                             dataGridViewLicenceFromCurrentSoftFromPC.DataSource = null;
                             treeViewInstalledSoftByAudAndPC.Nodes[0].Nodes.Clear();
@@ -600,40 +626,42 @@ namespace accounting_sw
 
         private void buttonDeleteSubjectArea_Click(object sender, EventArgs e)
         {
-            if(dataGridViewSubjectArea.DataSource != null)          
-            try
-            {
-                int currentRowIndex = dataGridViewSubjectArea.CurrentCell.RowIndex;
-                if (currentRowIndex >= 0)
-                {
-                    sQLite.DeleteSubjectAreaFromDB(dataGridViewSubjectArea.Rows[currentRowIndex].Cells[dataGridViewSubjectArea.Columns.Count - 1].Value.ToString());
+            if (dataGridViewSubjectArea.DataSource != null)
+                if (MessageBox.Show("Вы точно хотите удалить выбранную предметную область и все связанные с ней данные?", "Удаление предметной области", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    try
+                    {
+                        int currentRowIndex = dataGridViewSubjectArea.CurrentCell.RowIndex;
+                        if (currentRowIndex >= 0)
+                        {
+                            sQLite.DeleteSubjectAreaFromDB(dataGridViewSubjectArea.Rows[currentRowIndex].Cells[dataGridViewSubjectArea.Columns.Count - 1].Value.ToString());
 
-                    dataGridViewSubjectArea.DataSource = sQLite.SelectFromDB(SQLiteWorker.dataTables.subject_area);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Произошла непредвиденная ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                            dataGridViewSubjectArea.DataSource = sQLite.SelectFromDB(SQLiteWorker.dataTables.subject_area);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Произошла непредвиденная ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
         }
 
         private void buttonDeleteLicenceType_Click(object sender, EventArgs e)
         {
-            if(dataGridViewLicenceType.DataSource != null)
-            try
-            {
-                int currentRowIndex = dataGridViewLicenceType.CurrentCell.RowIndex;
-                if (currentRowIndex >= 0)
-                {
-                    sQLite.DeleteLicenceTypeFromDB(dataGridViewLicenceType.Rows[currentRowIndex].Cells[dataGridViewLicenceType.Columns.Count - 1].Value.ToString());
+            if (dataGridViewLicenceType.DataSource != null)
+                if (MessageBox.Show("Вы точно хотите удалить выбранный тип лицензирования и все связанные с ним данные?", "Удаление типа лицензирования", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    try
+                    {
+                        int currentRowIndex = dataGridViewLicenceType.CurrentCell.RowIndex;
+                        if (currentRowIndex >= 0)
+                        {
+                            sQLite.DeleteLicenceTypeFromDB(dataGridViewLicenceType.Rows[currentRowIndex].Cells[dataGridViewLicenceType.Columns.Count - 1].Value.ToString());
 
-                    dataGridViewLicenceType.DataSource = sQLite.SelectFromDB(SQLiteWorker.dataTables.licence_type);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Произошла непредвиденная ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                            dataGridViewLicenceType.DataSource = sQLite.SelectFromDB(SQLiteWorker.dataTables.licence_type);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Произошла непредвиденная ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
         }
 
         private void buttonDeleteLicence_Click(object sender, EventArgs e)
@@ -648,7 +676,7 @@ namespace accounting_sw
                     {
                         try
                         {
-                            sQLite.DeleteLicenceFromDB(dataGridViewLicencesFromSoft.Rows[currentRowIndex].Cells[dataGridViewLicencesFromSoft.Columns.Count - 5].Value.ToString());
+                            sQLite.DeleteLicenceFromDB(dataGridViewLicencesFromSoft.Rows[currentRowIndex].Cells[dataGridViewLicencesFromSoft.Columns.Count - 6].Value.ToString());
                             dataGridViewLicencesFromSoft.DataSource = sQLite.SelectLicenceFromSoftwareFromDB(dataGridViewSoftware.Rows[currentSoftwareRowIndex].Cells[0].Value.ToString());
                         }
                         catch (Exception ex)

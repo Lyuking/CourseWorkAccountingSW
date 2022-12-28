@@ -56,6 +56,7 @@ namespace accounting_sw.DataChangerForms
             // textBoxSoftwareName
             // 
             this.textBoxSoftwareName.Location = new System.Drawing.Point(144, 270);
+            this.textBoxSoftwareName.MaxLength = 255;
             this.textBoxSoftwareName.Name = "textBoxSoftwareName";
             this.textBoxSoftwareName.Size = new System.Drawing.Size(194, 20);
             this.textBoxSoftwareName.TabIndex = 1;
@@ -63,6 +64,7 @@ namespace accounting_sw.DataChangerForms
             // textBoxSoftwareDescription
             // 
             this.textBoxSoftwareDescription.Location = new System.Drawing.Point(144, 319);
+            this.textBoxSoftwareDescription.MaxLength = 10000;
             this.textBoxSoftwareDescription.Multiline = true;
             this.textBoxSoftwareDescription.Name = "textBoxSoftwareDescription";
             this.textBoxSoftwareDescription.Size = new System.Drawing.Size(194, 106);
@@ -71,6 +73,7 @@ namespace accounting_sw.DataChangerForms
             // textBoxSoftwareRequiredSpace
             // 
             this.textBoxSoftwareRequiredSpace.Location = new System.Drawing.Point(144, 444);
+            this.textBoxSoftwareRequiredSpace.MaxLength = 255;
             this.textBoxSoftwareRequiredSpace.Name = "textBoxSoftwareRequiredSpace";
             this.textBoxSoftwareRequiredSpace.Size = new System.Drawing.Size(194, 20);
             this.textBoxSoftwareRequiredSpace.TabIndex = 3;
@@ -97,6 +100,7 @@ namespace accounting_sw.DataChangerForms
             // 
             // dataGridViewSoftware
             // 
+            this.dataGridViewSoftware.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridViewSoftware.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewSoftware.Location = new System.Drawing.Point(28, 12);
             this.dataGridViewSoftware.Name = "dataGridViewSoftware";
@@ -168,6 +172,8 @@ namespace accounting_sw.DataChangerForms
             this.Controls.Add(this.textBoxSoftwareDescription);
             this.Controls.Add(this.textBoxSoftwareName);
             this.Controls.Add(this.comboBoxSubjectArea);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "SoftwareChanger";
             this.Text = "Добавление и изменение ПО";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSoftware)).EndInit();
